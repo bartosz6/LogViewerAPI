@@ -5,66 +5,38 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Domain.VarnishLog;
 using Infrastructure.Interfaces;
+using System.IO;
+using Infrastructure.Utils;
 
 namespace Infrastructure.Repositories
 {
     public class FileRepository : IRepository<VarnishLog>
     {
-        public FileRepository()
+        private readonly IEnumerable<VarnishLog> _logs;
+        private readonly IParser<VarnishLog> _varnishLogParser;
+        public FileRepository(IParser<VarnishLog> varnishLogParser)
         {
+            _varnishLogParser = varnishLogParser;
+
+            var dict = Directory.GetCurrentDirectory();
+            var file = dict + @"/varnish.log";
+
+            _logs = File.ReadAllLines(file).Select(line => _varnishLogParser.Parse(line));
         }
 
         public Task<VarnishLog> Get(Expression<Func<VarnishLog, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return (new TaskFactory()).StartNew(() => _logs.AsQueryable().FirstOrDefault(predicate));
         }
 
         public IQueryable<VarnishLog> GetAll()
         {
-            var list = new List<VarnishLog>()
-            {
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-                new VarnishLog() { Url = "test url" },
-            };
-
-            return list.AsQueryable();
+            return _logs.AsQueryable();
         }
 
         public IQueryable<VarnishLog> Find(Expression<Func<VarnishLog, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _logs.AsQueryable().Where(predicate);
         }
 
         public Task Create(VarnishLog entity)

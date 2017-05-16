@@ -17,27 +17,27 @@ namespace WebApplication.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("{code}/{text}", Name = "Logs_List")]
+        [HttpGet("", Name = "Logs_List")]
         public async Task<object> GetLogs(
-            int code,
+            int? code,
             string text,
-            DateTime startDate,
-            DateTime endDate,
+            DateTime? startDate,
+            DateTime? endDate,
             string orderBy,
-            bool desc,
-            int start,
-            int limit
+            bool? desc,
+            int? start,
+            int? limit
         )
         {
             var result = await _queryDispatcher.Dispatch<GetVarnishLogsQuery, string>(
                 new GetVarnishLogsQuery(
-                    startIndex: start,
-                    length: limit,
+                    startIndex: start ?? 0,
+                    length: limit ?? 20,
                     startDate: startDate,
                     endDate: endDate,
                     responseCode: code,
                     orderColumn: orderBy,
-                    sortDescending: desc,
+                    sortDescending: desc ?? true,
                     fullText: text
                 )
             );

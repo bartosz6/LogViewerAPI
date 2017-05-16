@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Domain.VarnishLog
 {
@@ -11,9 +13,8 @@ namespace Domain.VarnishLog
         public string Url { get; set; }
         public string Protocol { get; set; }
         public int ResponseCode { get; set; }
-        public long ResponseSize {get; set;}
-        public string Refferal {get; set;}
-        public string UserAgent {get; set;}
+        public long ResponseSize { get; set; }
+        public string Refferal { get; set; }
 
         public VarnishLog()
         {

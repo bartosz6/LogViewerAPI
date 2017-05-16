@@ -13,6 +13,8 @@ using System.Reflection;
 using Infrastructure.Interfaces;
 using Domain.VarnishLog;
 using Infrastructure.Repositories;
+using Infrastructure.Utils.VarnishLogParser;
+using Infrastructure.Utils;
 
 namespace WebApplication
 {
@@ -117,7 +119,12 @@ namespace WebApplication
             containerBuilder
                 .RegisterType<FileRepository>()
                 .As<IRepository<VarnishLog>>()
-                .InstancePerLifetimeScope();
+                .SingleInstance();
+                
+            containerBuilder
+                .RegisterType<VarnishLogParser>()
+                .As<IParser<VarnishLog>>()
+                .SingleInstance();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,17 +6,16 @@ namespace Domain.VarnishLog.Queries
     {
         public int StartIndex { get; }
         public int Length { get; }
-
-        public DateTime StartDate { get; }
-        public DateTime EndDate { get; }
-        public int ResponseCode { get; }
-
         public string OrderColumn { get; }
         public bool SortDescending { get; }
 
+        public DateTime? StartDate { get; }
+        public DateTime? EndDate { get; }
+        public int? ResponseCode { get; }
         public string FullText { get; }
 
-        public GetVarnishLogsQuery(int startIndex, int length, DateTime startDate, DateTime endDate, int responseCode, string orderColumn, bool sortDescending, string fullText)
+
+        public GetVarnishLogsQuery(int startIndex, int length, DateTime? startDate, DateTime? endDate, int? responseCode, string orderColumn, bool sortDescending, string fullText)
         {
             this.StartIndex = startIndex;
             this.Length = length;
