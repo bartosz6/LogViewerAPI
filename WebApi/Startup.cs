@@ -15,6 +15,7 @@ using Domain.VarnishLog;
 using Infrastructure.Repositories;
 using Infrastructure.Utils.VarnishLogParser;
 using Infrastructure.Utils;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace WebApplication
 {
@@ -120,7 +121,7 @@ namespace WebApplication
                 .RegisterType<FileRepository>()
                 .As<IRepository<VarnishLog>>()
                 .SingleInstance();
-                
+
             containerBuilder
                 .RegisterType<VarnishLogParser>()
                 .As<IParser<VarnishLog>>()
@@ -145,7 +146,6 @@ namespace WebApplication
                 //app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
             }
-
 
             app.UseStaticFiles();
 

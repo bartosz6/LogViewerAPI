@@ -4,10 +4,12 @@ using Domain.VarnishLog.Queries;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Utils;
 
 namespace WebApplication.Controllers
 {
     [Route("api/logs")]
+    [ExceptionHandler]
     public class LogController : Controller
     {
         private readonly IQueryDispatcher _queryDispatcher;
@@ -17,7 +19,7 @@ namespace WebApplication.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("", Name = "Logs_List")]
+        [HttpGet("{code?}", Name = "Logs_List")]
         public async Task<object> GetLogs(
             int? code,
             string text,

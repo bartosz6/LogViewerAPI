@@ -4,37 +4,115 @@ using Domain.VarnishLog;
 
 namespace Infrastructure.Utils.VarnishLogParser
 {
-    public class VarnishLogParser : IParser<VarnishLog>
+    public class VarnishLogParser : VarnishLogParserCore, IParser<VarnishLog>
     {
-        public VarnishLog Parse(string str)
+        public override string ParseIp(string str)
         {
-            var ip = str.Split(' ')[0];
-            var date = DateTime.ParseExact(str.Split('[')[1].Split(']')[0], "dd/MMMM/yyyy:HH:mm:ss zz00", System.Globalization.CultureInfo.InvariantCulture);
-            var method = str.Split('"')[1].Split(' ')[0];
-            var url = str.Split('"')[1].Split(' ')[1];
-            var protocol = str.Split('"')[1].Split(' ')[2];
-            var responseCode = int.Parse(str.Split('"')[2].Split(' ')[1]);
-            var responseSize = int.Parse(str.Split('"')[2].Split(' ')[2]);
-            var refferal = str.Split('"')[3];
-            var browserType = str.Split('"')[5];
-
-            return new VarnishLog
+            try
             {
-                ClientIp = ip,
-                Date = date,
-                Method = method,
-                Url = url,
-                Protocol = protocol,
-                ResponseCode = responseCode,
-                ResponseSize = responseSize,
-                Refferal = refferal,
-                BrowserType = browserType
-            };
+                return base.ParseIp(str);
+            }
+            catch
+            {
+                throw new ArgumentException($"Error while parsing ClientIp from {str}");
+            }
+        }
+        public override DateTime ParseDate(string str)
+        {
+            try
+            {
+                return base.ParseDate(str);
+            }
+            catch
+            {
+                throw new ArgumentException($"Error while parsing Date from {str}");
+            }
+        }
+        public override string ParseMethod(string str) 
+        {
+            try
+            {
+                return base.ParseMethod(str);
+            }
+            catch
+            {
+                throw new ArgumentException($"Error while parsing Method from {str}");
+            }
+        }
+        public override string ParseUrl(string str)
+        {
+            try
+            {
+                return base.ParseUrl(str);
+            }
+            catch
+            {
+                throw new ArgumentException($"Error while parsing Url from {str}");
+            }
+        }
+        public override string ParseProtocol(string str) 
+        {
+            try
+            {
+                return base.ParseProtocol(str);
+            }
+            catch
+            {
+                throw new ArgumentException($"Error while parsing Protocol from {str}");
+            }
+        }
+        public override int ParseResponseCode(string str) 
+        {
+            try
+            {
+                return base.ParseResponseCode(str);
+            }
+            catch
+            {
+                throw new ArgumentException($"Error while parsing ResponseCode from {str}");
+            }
+        }
+        public override long ParseResponseSize(string str) 
+        {
+            try
+            {
+                return base.ParseResponseSize(str);
+            }
+            catch
+            {
+                throw new ArgumentException($"Error while parsing ResponseSize from {str}");
+            }
+        }
+        public override string ParseRefferal(string str) 
+        {
+            try
+            {
+                return base.ParseRefferal(str);
+            }
+            catch
+            {
+                throw new ArgumentException($"Error while parsing Refferal from {str}");
+            }
+        }
+        public override string ParseBrowserType(string str) 
+        {
+            try
+            {
+                return base.ParseBrowserType(str);
+            }
+            catch
+            {
+                throw new ArgumentException($"Error while parsing BrowserType from {str}");
+            }
+        }
+        public override VarnishLog Parse(string str)
+        {            
+            return base.Parse(str);
         }
 
-        public Task<VarnishLog> ParseAsync(string str)
+        public override Task<VarnishLog> ParseAsync(string str)
         {
-            throw new NotImplementedException();
+            return base.ParseAsync(str);
         }
     }
 }
