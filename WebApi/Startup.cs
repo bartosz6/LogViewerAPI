@@ -48,7 +48,8 @@ namespace WebApplication
                 builder =>
                 {
                     builder
-                        .WithOrigins("http://localhost:4200")
+                        .AllowAnyOrigin()
+                       // .WithOrigins("http://localhost:4200")
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                 })
