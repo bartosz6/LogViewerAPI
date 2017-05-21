@@ -20,7 +20,7 @@ namespace WebApplication.Controllers
 
         [AllowAnonymous]
         [HttpGet("{code?}", Name = "Logs_List")]
-        public async Task<object> GetLogs(
+        public async Task<ActionResult> GetLogs(
             int? code,
             string text,
             DateTime? startDate,
@@ -44,7 +44,7 @@ namespace WebApplication.Controllers
                 )
             );
 
-            return result;
+            return Content(result, "application/json");
         }
     }
 }

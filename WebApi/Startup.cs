@@ -16,6 +16,7 @@ using Infrastructure.Repositories;
 using Infrastructure.Utils.VarnishLogParser;
 using Infrastructure.Utils;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace WebApplication
 {
@@ -62,6 +63,8 @@ namespace WebApplication
                         .Build()
                     )
                 );
+               // options.OutputFormatters.RemoveType<TextOutputFormatter>();
+                options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
             })
             .AddControllersAsServices()
             .AddJsonOptions(options =>
