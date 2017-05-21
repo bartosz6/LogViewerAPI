@@ -58,6 +58,7 @@ Unfortunately I did not have enough time to implement many things:
 - log file url moved to config
 - more handsome routes
 - proper query default values
+- tests
 
 ## Used libs
 1. .NET Core
